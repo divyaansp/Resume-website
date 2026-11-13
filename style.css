@@ -1,0 +1,241 @@
+/* ===== 1. COLOURS AND FONTS (set once, used everywhere) ===== */
+:root {
+  --paper: #ece5d6;       /* warm page background, like old ledger paper */
+  --ink: #26221d;         /* main text */
+  --ink-soft: #6a6254;    /* dates and secondary text */
+  --brick: #a2412a;       /* the one accent colour */
+  --note: #f2e2a0;        /* sticky-note yellow */
+  --line: #b9ad94;        /* thin dividers */
+
+  --font-head: "Young Serif", Georgia, serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-mono: "DM Mono", "Courier New", monospace;
+  --font-hand: "Caveat", cursive;
+}
+
+/* ===== 2. ELEMENT SELECTORS ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.18rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1, h2, h3 { font-family: var(--font-head); font-weight: 400; line-height: 1.15; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.7rem); margin-bottom: 1.2rem; }
+h2 { font-size: 1.7rem; }
+h3 { font-size: 1.25rem; }
+
+p { margin-bottom: 0.9rem; max-width: 60ch; }
+a { color: var(--ink); }
+ul { list-style: none; }
+
+a:focus-visible { outline: 3px solid var(--brick); outline-offset: 3px; }
+
+/* ===== 3. ID SELECTORS (one-off elements) ===== */
+#top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+#footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ===== 4. NAVIGATION (flexbox) ===== */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+}
+
+.logo {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.nav-links a:hover {
+  color: var(--brick);
+  text-decoration: underline wavy;
+  text-underline-offset: 5px;
+}
+
+/* ===== 5. HERO ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;     /* deliberately uneven */
+  align-items: center;
+  gap: 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 4rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--brick);
+  margin-bottom: 0.8rem;
+}
+
+.hero-intro { font-size: 1.3rem; line-height: 1.55; max-width: 36ch; }
+
+.links { margin-top: 1.8rem; }
+.text-link {
+  display: inline-block;
+  margin-right: 1.6rem;
+  padding-bottom: 1px;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid var(--brick);
+}
+.text-link:hover { color: var(--brick); }
+
+/* Photo: slightly tilted, like a print taped to the page */
+.photo-wrap {
+  position: relative;
+  justify-self: center;
+  width: 270px;
+  padding: 12px 12px 46px;
+  background: #fbf8f1;
+  box-shadow: 3px 6px 16px rgba(38, 34, 29, 0.22);
+  transform: rotate(-2.5deg);
+}
+.photo-wrap img { display: block; width: 100%; }
+.photo-wrap figcaption {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.photo-wrap::before {          /* the bit of tape */
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 95px;
+  height: 28px;
+  background: rgba(190, 165, 100, 0.55);
+  transform: translateX(-50%) rotate(3deg);
+}
+
+/* ===== 6. SECTIONS ===== */
+.section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3.2rem 1.5rem;
+  border-top: 1px dashed var(--line);
+}
+
+/* heading on the left, content on the right */
+.section-grid {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 2rem;
+}
+.section-grid h2 { align-self: start; padding-top: 0.15rem; }
+
+.sidenote {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--brick);
+  transform: rotate(-2deg);
+  margin-top: 0.6rem;
+}
+
+/* ledger-style rows: date on the left, details on the right */
+.entry {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1.5rem;
+  padding-bottom: 1.8rem;
+}
+.entry .date {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  padding-top: 0.4rem;
+}
+.sub { font-style: italic; color: var(--ink-soft); margin-bottom: 0.3rem; }
+.entry ul { margin-top: 0.4rem; }
+.entry li { padding-left: 1.1rem; position: relative; margin-bottom: 0.25rem; }
+.entry li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--brick);
+}
+
+/* the sticky-note card */
+.note {
+  background: var(--note);
+  max-width: 400px;
+  padding: 1.1rem 1.4rem 0.5rem;
+  margin-top: 0.5rem;
+  box-shadow: 2px 4px 10px rgba(38, 34, 29, 0.15);
+  transform: rotate(0.9deg);
+}
+.note h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+
+.skill-list li {
+  padding: 0.15rem 0 0.15rem 1.4rem;
+  position: relative;
+  font-size: 1.25rem;
+}
+.skill-list li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  color: var(--brick);
+}
+
+.big-link {
+  font-family: var(--font-head);
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  text-decoration-color: var(--brick);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+.big-link:hover { color: var(--brick); }
+
+/* ===== 7. SMALL SCREENS ===== */
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 3rem; }
+  .photo-wrap { order: -1; width: 220px; }
+  .section-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .entry { grid-template-columns: 1fr; gap: 0; }
+  .entry .date { padding-top: 0; margin-bottom: 0.2rem; }
+}
